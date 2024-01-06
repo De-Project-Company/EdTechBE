@@ -1,0 +1,26 @@
+{
+  "name": "edtechbe",
+  "version": "1.0.0",
+  "description": "Backend for Edtech Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/De-Project-Company/EdTechBE.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/De-Project-Company/EdTechBE/issues"
+  },
+  "homepage": "https://github.com/De-Project-Company/EdTechBE#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3"
+  }
+}
