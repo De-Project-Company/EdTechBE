@@ -1,56 +1,16 @@
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
+
 import School from '../models/schoolModel.js';
 import catchAsync from '../utils/catchAsync.js';
-import otpGenerator from 'otp-generator';
 import Email from '../utils/email.js';
 import AppError from '../utils/appError.js';
-
-const signToken = (id, expiresin) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: expiresin
-  });
-};
-
-// refactored the feedback
-const createSendToken = (foundSchool, statusCode, req, res) => {
-  const token = signToken(foundUser._id, process.env.JWT_EXPIRES_IN);
-
-  res.cookie('jwt', token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'None'
-  });
-  // removes the password from the output
-  delete foundSchool._doc.password;
-  res.status(statusCode).json({
-    status: 'success',
-    data: {
-      school: foundSchool
-    }
-  });
-};
-
-const licenceNumberGenerator = () => {
-  const licence = otpGenerator.generate(11, {
-    digits: true,
-    alphabets: false,
-    upperCase: false,
-    specialChars: false
-  });
-  const hashedLicence = crypto
-    .createHash('sha256')
-    .update(licence)
-    .digest('hex');
-
-  return { licence, hashedLicence };
-};
+import { createSendToken } from '../utils/jwt.utils.js';
+import { licenceNumberGenerator } from '../utils/helperFun.js';
+import schema from '../validators/signup.validator.js';
 
 const signup = catchAsync(async (req, res, next) => {
   const { licence, hashedLicence } = licenceNumberGenerator();
+
   const newSchool = {
     schoolName: req.body.schoolName,
     email: req.body.email,
@@ -58,10 +18,10 @@ const signup = catchAsync(async (req, res, next) => {
     contactAddress: req.body.contactAddress,
     adminName: req.body.adminName,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
-    licence: hashedLicence
+    passwordConfirm: req.body.passwordConfirm
   };
-
+  await schema.validateAsync(newSchool);
+  newSchool.licence = hashedLicence;
   const school = await School.create(newSchool);
 
   try {
@@ -78,23 +38,31 @@ const signup = catchAsync(async (req, res, next) => {
 });
 
 const activateAccount = catchAsync(async (req, res, next) => {
-  const hashedToken = crypto
+  const hashedLicence = crypto
     .createHash('sha256')
     .update(req.body.licence)
     .digest('hex');
-
   const school = await School.findOne({
-    licence: hashedToken
+    licence: hashedLicence
   });
   if (!school) {
     return next(new AppError('Invalid Licence Number', 400));
   }
-
   school.active = true;
   await school.save({ validateBeforeSave: false });
-  createSendToken(school, 200, req, res);
+  createSendToken(school, 200, 'Account activated successfully.', req, res);
 });
 
-const signin = () => {};
+const signin = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next(new AppError('Please provide email and password', 400));
+  }
+  const school = await School.findOne({ email }).select('+password -__v');
+  if (!school || !(await school.correctPassword(password, school.password))) {
+    return next(new AppError(`Incorrect email or password.`, 401));
+  }
+  createSendToken(school, 200, 'Signed in successfully.', req, res);
+});
 
 export { signup, signin, activateAccount };
