@@ -332,7 +332,7 @@ This is particularly helpful for node app profiling. When you inspect a memory s
 
 ### Use naming conventions for variables, constants, functions, and classes
 
-Use lowerCamelCase when naming constants, variables, and functions and UpperCamelCase (capital first letter as well) when naming classes.
+Use `lowerCamelCase` when naming constants, variables, and functions and `UpperCamelCase` (capital first letter as well) when naming classes.
 
 This will help you to easily distinguish between plain variables/functions, and classes that require instantiation. Use descriptive names, but try to keep them short.
 
