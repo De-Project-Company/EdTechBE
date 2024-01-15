@@ -7,53 +7,78 @@ This is a minimal and opinionated guide for writing consistent and productive No
 - Models end with prefix model
 - Controllers end with prefix controller
 - Services end with prefix service
-- Atils end with prefix util
+- Utils end with prefix util
 
-    ```plain-text
-    // Sample Project Structure
-
-    SampleApp-Server/
-    - .git
-    - .gitignore
-    - package.json
-
-    - app.js        //  Cluster Node file
-    - server.js     // Cluster Master, our main file that runs app.js
-    - config/
-        - base.js       // Base config file
-        - env/      // Environment specific config files
-            - development-e1.js
-            - production-e2.js
-        ...
-    - routes/       // We should follow versioning standard.
-        - v1/
-            - home.route.js
-        ...
-    - middlewares/      // All middlewares goes here(per file basis)
-        - session.js
-        - track.js
-        ...
-    - models/
-        - user.model.js
-        ...
-    - controllers/
-        - home.controller.js
-        ...
-    - services/     // E.G, email sending service 📬
-        - email.service.js  
-        ...
-    - schemas/      // Plays the same role as validators, but accounts for all forms of schema
-        - dataModelSchema/
-            - user.schema.js
-        ...
-        - requestSchema/
-            - content.schema.js
-        ...
-    - utils/        
-        - httpRequest.util.js
-        ...
-    - tests/
-        ...
+    ```plaintext
+      SampleApp-Server/
+      │
+      ├── .git/
+      ├── .gitignore
+      ├── .env.dev               # Development environment variables
+      ├── .env.prod              # Production environment variables
+      ├── .env.test              # Testing environment variables
+      │
+      ├── package.json
+      ├── package-lock.json
+      ├── .eslintrc.js           # ESLint configuration
+      ├── .prettierrc            # Prettier configuration
+      │
+      ├── node_modules/
+      │
+      ├── src/
+      │   ├── modules/
+      │   │   ├── student/
+      │   │   │   ├── controllers/
+      │   │   │   ├── models/
+      │   │   │   ├── routes/
+      │   │   │   ├── schemas/
+      │   │   │   ├── services/
+      │   │   │   ├── utils/     # Utils specific to the 'student' module
+      │   │   │   └── ...
+      │   │   ├── school/
+      │   │   │   ├── controllers/
+      │   │   │   ├── models/
+      │   │   │   ├── routes/
+      │   │   │   ├── schemas/
+      │   │   │   ├── services/
+      │   │   │   ├── utils/     # Utils specific to the 'school' module
+      │   │   │   └── ...
+      │   │   └── ...
+      │   │
+      │   ├── shared/
+      │   │   ├── db/
+      │   │   ├── logger/
+      │   │   ├── middlewares/
+      │   │   ├── templates/
+      │   │   ├── utils/         # Shared utilities accessible by multiple modules
+      │   │   └── ...
+      │   │
+      │   ├── tests/
+      │   │   ├── unit/
+      │   │   ├── integration/
+      │   │   └── ...
+      │   │
+      │   ├── config/
+      │   │   ├── development.js
+      │   │   ├── production.js
+      │   │   ├── test.js
+      │   │   └── index.js       # Environment-specific configuration
+      │   │
+      │   ├── scripts/
+      │   │   ├── start-dev.js   # Development server script
+      │   │   ├── test.js        # Test script
+      │   │   └── ...
+      │   │
+      │   └── app.js             # Main application file
+      │
+      ├── .github/
+      │   ├── workflows/
+      │   │   └── ci.yml         # CI/CD workflow configuration
+      │
+      ├── docs/                   # Project documentation
+      │   └── ...
+      │
+      └── README.md               # Project README
     ```
 
 ## Separate Express ‘app’ and ‘server’
@@ -379,8 +404,6 @@ The best gift you can give to your code is using *async-await/Promise* which pro
 
 ## Delcaring and Writing Functions
 
-
-
 ### Keep Functions Small and Single-Purpose
 
 - Break down complex tasks into smaller, focused functions.
@@ -689,8 +712,9 @@ console.log(john.greet());
 
 ## Reference
 
-- https//blog.logrocket.com/node-js-project-architecture-best-practices/
-- http//anixir.com/minimal-node-express-style-guide/
-- https//www.perfomatix.com/nodejs-coding-standards-and-best-practices/
-- https//javascript.info/import-export/
-- https//javascript.info/code-quality/
+- <https//blog.logrocket.com/node-js-project-architecture-best-practices>
+- <http//anixir.com/minimal-node-express-style-guide>
+- <https//www.perfomatix.com/nodejs-coding-standards-and-best-practices>
+- <https//javascript.info/import-export>
+- <https//javascript.info/code-quality>
+- <https://medium.com/@tanooshri24/scalable-project-structure-for-backend-applications-55636326ee37>
