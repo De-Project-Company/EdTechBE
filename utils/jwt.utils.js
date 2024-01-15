@@ -20,6 +20,7 @@ const createSendToken = (foundSchool, statusCode, message, req, res) => {
   });
   // removes the password from the output
   delete foundSchool._doc.password;
+  delete foundSchool._doc.active;
   res.status(statusCode).json({
     status: 'success',
     message,

@@ -58,10 +58,23 @@ const signin = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError('Please provide email and password', 400));
   }
-  const school = await School.findOne({ email }).select('+password -__v');
+  const school = await School.findOne({ email }).select(
+    '+password -__v +active'
+  );
   if (!school || !(await school.correctPassword(password, school.password))) {
     return next(new AppError(`Incorrect email or password.`, 401));
   }
+  if (school && (await school.correctPassword(password, school.password))) {
+    if (!school.active) {
+      return next(
+        new AppError(
+          `You have not activated your account. Please do so to gain access.`,
+          401
+        )
+      );
+    }
+  }
+  school._doc
   createSendToken(school, 200, 'Signed in successfully.', req, res);
 });
 
