@@ -712,9 +712,9 @@ console.log(john.greet());
 
 ## Reference
 
-- <https//blog.logrocket.com/node-js-project-architecture-best-practices>
-- <http//anixir.com/minimal-node-express-style-guide>
-- <https//www.perfomatix.com/nodejs-coding-standards-and-best-practices>
-- <https//javascript.info/import-export>
-- <https//javascript.info/code-quality>
-- <https://medium.com/@tanooshri24/scalable-project-structure-for-backend-applications-55636326ee37>
+- [https//blog.logrocket.com/node-js-project-architecture-best-practices/](https//blog.logrocket.com/node-js-project-architecture-best-practices)
+- [http//anixir.com/minimal-node-express-style-guide/](http//anixir.com/minimal-node-express-style-guide/)
+- [https//www.perfomatix.com/nodejs-coding-standards-and-best-practices](https//www.perfomatix.com/nodejs-coding-standards-and-best-practices)
+- [https//javascript.info/import-export](https//javascript.info/import-export)
+- [https//javascript.info/code-quality](https//javascript.info/code-quality)
+- [https://medium.com/@tanooshri24/scalable-project-structure-for-backend-applications-55636326ee37](https://medium.com/@tanooshri24/scalable-project-structure-for-backend-applications-55636326ee37)
