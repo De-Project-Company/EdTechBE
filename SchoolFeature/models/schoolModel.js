@@ -30,6 +30,10 @@ const schoolSchema = new mongoose.Schema({
   passwordConfirm: {
     type: String
   },
+  role: {
+    type: String,
+    default: "school"
+  },
   createdAt: {
     type: Date,
     Default: Date.now

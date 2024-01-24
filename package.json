@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon config/config.js"
+    "start-dev": "set NODE_ENV=development && nodemon app.js",
+    "start-production": "set NODE_ENV=production && nodemon app.js",
+    "start-staging": "set NODE_ENV=staging && nodemon app.js"
   },
   "repository": {
     "type": "git",
