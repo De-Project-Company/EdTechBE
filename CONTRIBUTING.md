@@ -14,7 +14,7 @@
 
 ### Usage
 3. Run the development server
-   node app.js
+   npm run start-dev
 
 ### Configuration
 4. Create a .env file in the project root with the following content
